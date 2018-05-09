@@ -25,7 +25,7 @@ code {
   box-sizing: border-box;
   width: 300px;
   padding: 45px 45px 45px 20px;
-  background-color: #0ebfe9;
+  background-color: #2980B9;
 
   margin-left: 10%;
   margin-right: 10%;
@@ -53,6 +53,10 @@ code {
   background-color: #dee2e6;
 }
 
+.pure-u-1-1 {
+  margin-top: 7%;
+}
+
 /* NAVBAR */
 
 .navbar {
@@ -62,8 +66,9 @@ code {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
 }
 
+/* the boxes in the navbar */
 .navbar a {
-  background-color: #0ebfe9;;
+  background-color: #2980B9;;
   color: #000000;
 }
 

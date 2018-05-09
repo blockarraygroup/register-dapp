@@ -1,9 +1,11 @@
 pragma solidity ^0.4.23;
 pragma experimental ABIEncoderV2;
 
+import {Ownable} from "./Ownable.sol";
+
 
 /// @title User Storage
-contract UserStorage {
+contract UserStorage is Ownable {
     /*
     * @author Austin Hester
     * @dev Built to be used by other contracts
@@ -20,13 +22,8 @@ contract UserStorage {
 
 	mapping(address => User) private mUsers;
 
-    // Solidity 0.4.23 has an issue with inheritence
-    // and multiple contsructors
-    // using old-style contsructor here for now
-    constructor(string _creator) public {
+    constructor() public {
     	require(msg.sender != 0x0);
-       	mUsers[msg.sender] = User(_creator, "-", "-", false);
-        assert(strcmp(mUsers[msg.sender].first, _creator));
     }
 
     // Get info about the user at given address

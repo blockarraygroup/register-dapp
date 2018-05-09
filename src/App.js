@@ -76,7 +76,6 @@ class App extends Component {
     const contract = require('truffle-contract')
     const register = contract(RegisterContract)
     register.setProvider(this.state.web3.currentProvider)
-    this.forceUpdate();
 
     // Declaring this for later so we can chain functions on SimpleStorage.
     var registerInstance;
@@ -86,7 +85,6 @@ class App extends Component {
 
     // Get accounts.
     this.state.web3.eth.getAccounts((error, accounts) => {
-      console.log(accounts);
       // Get contract instance
       register.deployed().then((instance) => {
         registerInstance = instance
@@ -101,7 +99,7 @@ class App extends Component {
               console.error(user);
               var userInfo = user;
               // Update state with registered info
-              this.setState({firstName: userInfo[0],
+              this.setState({ firstName: userInfo[0],
                               lastName: userInfo[1],
                               email: userInfo[2] });
             });
@@ -121,11 +119,15 @@ class App extends Component {
         // Here we register them
         }).then((result) => {
           if (!result) {
+            const gasLimit = 200000;
 
             // Register the user
             registerInstance.register(this.state.firstName, 
-                                              this.state.lastName, this.state.email,
-                                              {from: accounts[0]})
+                                      this.state.lastName,
+                                      this.state.email,
+                                      {from: accounts[0],
+                                       gas: gasLimit,
+                                       gasPrice: 1100000000})
             .then((result) => {
              // wait for txt:wait
               this.state.web3.eth.getTransactionReceipt(result['tx'],
@@ -182,10 +184,12 @@ class App extends Component {
           <main className="container">
             <div className="pure-g">
               <div className="pure-u-1-1">
+              <div className="chicken">
                 <h2>You Are Registered</h2>
                 <p>{this.state.firstName}</p>
                 <p>{this.state.lastName}</p>
                 <p>{this.state.email}</p>
+              </div>
               </div>
             </div>
           </main>

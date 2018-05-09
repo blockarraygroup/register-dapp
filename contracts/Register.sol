@@ -5,14 +5,11 @@ import {UserStorage} from "./UserStorage.sol";
 
 
 /// @title Node Registration
-contract Register is UserStorage("creator") {
+contract Register is UserStorage {
     /*
     * @author Austin Hester
     * @dev For use in the Registration Dapp
     */
-
-    // User struct located in ./UserStorage.sol
-    mapping(address => User) users;
 
     event UserRegistered(string _first, string _last, string _email);
 
@@ -32,7 +29,8 @@ contract Register is UserStorage("creator") {
     ) public {
         require(msg.sender != 0x0);
         require(!isRegistered(msg.sender));
-        User memory newUser = User(_first, _last, _email, true);
+        User memory newUser =
+            User(_first, _last, _email, true);
         storeUser(msg.sender, newUser);
         emit UserRegistered(newUser.first, newUser.last, newUser.email);
     }
