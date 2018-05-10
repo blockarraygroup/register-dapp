@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "dotenv": "^2.0.0",
+    "email-validator": "^2.0.3",
     "growl": "^1.10.5",
     "mocha": "^5.1.1",
     "react": "^15.4.2",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import RegisterContract from '../build/contracts/Register.json'
 import getWeb3 from './utils/getWeb3'
+import validator from 'email-validator'
 
 import './css/oswald.css'
 import './css/open-sans.css'
@@ -69,6 +70,12 @@ class App extends Component {
       console.log("Confirmed Registration");
     } else {
       console.log("Denied Registration");
+      return;
+    }
+
+    if (!validator.validate(this.state.email)) {
+      console.log("Invalid email");
+      alert("Invalid email")
       return;
     }
     
