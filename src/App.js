@@ -129,22 +129,28 @@ class App extends Component {
                                        gas: gasLimit,
                                        gasPrice: 1100000000})
             .then((result) => {
-             // wait for txt:wait
-              this.state.web3.eth.getTransactionReceipt(result['tx'],
-                (result) => {
-                  // After waiting callback
-                  if (result !== 'undefined') {
-                    this.setState({completed: 1});
-                    console.error(result);
-                  } else {
-                    this.setState({pending: 0});
-                    console.error("TX failed")
-                    console.error("result");
-                    alert ("Transaction Failed");
-                    this.forceUpdate();
-                  }
+              // wait for txt:wait
+              // After waiting callback
+              if (result !== 'undefined') {
+                const receipt = result['receipt'];
+                if (receipt.gasUsed === gasLimit) {
+                  // TX reverted
+                  this.setState({pending: 0}) ;
+                  console.error(result);
+                  alert ("Transaction Reverted.\nInput not quite right");
+                  this.forceUpdate();
+                } else {
+                  // TX worked
+                  this.setState({completed: 1});
+                  console.error(result);
+                }
+              } else {
+                this.setState({pending: 0});
+                console.error("TX failed")
+                alert ("Transaction Failed");
+                this.forceUpdate();
+              }
 
-                });
             })
             .catch((error) => {
               // Error, take them to Register page
@@ -242,8 +248,10 @@ class App extends Component {
           <main className="container">
             <div className="pure-g">
               <div className="pure-u-1-1">
-                <h2>Waiting for confirmation...</h2>
-                <p>Check MetaMask</p>
+                <div className="chicken">
+                  <h2>Waiting for confirmation...</h2>
+                  <p>Check MetaMask</p>
+                </div>
               </div>
             </div>
           </main>

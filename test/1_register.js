@@ -7,16 +7,8 @@ contract('Register', function(accounts) {
         instance = rinst;
     });
 
-    // Test that the creator's account is modifiable
-    it("should allow the creator to re-register once", function() {
-        return instance.isRegistered.call(accounts[0])
-        .then((flag) => {
-            assert.equal(flag, false,
-                            "creator re-registration not allowed");
-        });
-    });
     // Register the Creator
-    it("should re-register the creator", function() {
+    it("should register the creator", function() {
         return instance.register("New", "Creator",
                                  "creator@a.com", {from: accounts[0]})
         .then((result) => {
